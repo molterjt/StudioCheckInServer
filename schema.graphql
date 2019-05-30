@@ -1,0 +1,387 @@
+
+
+type Query{
+    me: User
+    users: [User!]!
+    user(userId: ID!): User
+    userCheckInHistory: [CheckIn]
+    searchUserByName(searchString: String!): [User]
+    instructors: [Instructor!]!
+    instructor(instructorId: ID!): Instructor
+    academies: [Academy]!
+    academy(academyId: ID!): Academy
+    techniques: [Technique]!
+    technique(techniqueId: ID!): Technique
+    checkIns: [CheckIn]!
+    checkIn(checkinId: ID!): CheckIn
+    tags: [Tag!]!
+    tag(tagId: ID!): Tag
+    classSessions: [ClassSession!]!
+    classSession(classSessionId: ID!): ClassSession
+    classPeriods: [ClassPeriod!]!
+    classPeriod(classPeriodId: ID!): ClassPeriod
+    beltPromotions: [BeltPromotion!]!
+    beltPromotion(beltPromotionId: ID!): BeltPromotion
+    academyRoster(academyTitle: String!): [User]
+    classPeriodsToday(academyTitle: String, daySearch: String): [ClassPeriod]
+    classPeriodsByAcademy(academyTitle: String): [ClassPeriod]
+    events: [Event!]!
+    event(eventId: ID!): Event
+}
+
+type Mutation{
+
+    signup(
+        email: String!,
+        password: String!,
+        firstName: String!
+        lastName: String!
+    ): AuthPayload!
+
+    login(
+        email: String!,
+        password: String!
+    ): AuthPayload!
+
+
+    createUser(
+        email: String!,
+        password: String!,
+        firstName: String!,
+        lastName: String!,
+        phone: String,
+        dob: String,
+        joinDate: String,
+        position: PositionType,
+        beltColor: BeltColor,
+        stripeCount: Int,
+        academies: [ID]
+    ): AuthPayload!
+
+    updateUser(
+        userId: ID!,
+        email: String,
+        password: String,
+        firstName: String,
+        lastName: String,
+        phone: String,
+        dob: String,
+        joinDate: String,
+        position: PositionType,
+        beltColor: BeltColor,
+        stripeCount: Int
+        academies: [ID]
+    ): User
+
+    deleteUser(userId: ID!): User
+
+
+
+    createAcademy(title: String!): Academy
+
+    updateAcademy(
+        academyId: ID!
+        title: String
+        classSessions: [ID!]
+        users: [ID!]
+    ): Academy
+
+    deleteAcademy(academyId: ID!): Academy
+
+    createInstructor(userId: ID!): Instructor
+    deleteInstructor(id: ID!): Instructor
+
+
+    createTechniqueWithExistingTags(title: String! tagIds: [ID]): Technique
+
+    createTechniqueWithNewTags(title: String! tags: [String]): Technique
+
+    updateTechnique( techniqueId: ID! title:String tagIds:[ID]): Technique
+
+    deleteTechnique(techniqueId: ID!): Technique
+
+
+    createTag( name: String! techniqueId: ID): Tag
+
+    updateTag(
+        tagId: ID!
+        name: String
+        technique: ID
+    ): Tag
+
+    deleteTag(tagId: ID!): Tag
+    deleteTags(tagIds: [ID!]): Tag
+    deleteTagsOfTechnique(techniqueId: ID): Technique
+
+
+    createCheckIn(
+        checked: Boolean
+        userId: ID!
+        classSessionId: ID
+        eventId: ID
+    ): CheckIn
+
+    updateCheckIn(
+        checkInId: ID!
+        classSessionId: ID
+        checked: Boolean
+        eventId: ID
+    ): CheckIn
+
+    deleteCheckIn(checkInId: ID!): CheckIn
+
+    createEvent(
+      title: String!
+      eventImage: String
+      day: String
+      time: String
+      date: DateTime
+      type: String
+      price: String
+      location: String
+      note: String
+    ): Event
+    deleteEvent(eventId: ID!):Event
+    updateEvent(
+          eventId: ID!
+          title: String!
+          eventImage: String
+          day: String
+          time: String
+          date: DateTime
+          type: String
+          price: String
+          location: String
+          note: String
+          publish: Boolean
+          checkInIds: [ID]
+    ): Event
+
+
+    createClassSession(
+        date: DateTime
+        instructorId: ID!
+        academyId: ID!
+        techniqueIds: [ID]
+        checkIns: [ID]
+    ): ClassSession
+
+    updateClassSession(
+        classSessionId: ID!
+        date: DateTime
+        instructorId: ID
+        academyId: ID
+        techniqueIds: [ID]
+        checkInValues: [CheckInCreateWithoutClassSessionInput]
+    ): ClassSession
+
+    deleteClassSession(classSessionId: ID!): ClassSession
+
+
+    createClassPeriod(
+        day: String!
+        time: String!
+        title: String
+        instructorId: ID
+        classSessionIds: [ID]
+        academyId: ID!
+    ): ClassPeriod
+    updateClassPeriod(
+        classPeriodId: ID!
+        day: String
+        time: String
+        title: String
+        instructorId: ID
+        academyId: ID
+        classSessionIds: [ID]
+    ): ClassPeriod
+    deleteClassPeriod(classPeriodId: ID!): ClassPeriod
+
+
+    createBeltPromotion(
+        category: PromotionType
+        note: String!
+        date: DateTime
+        userId: ID
+    ): BeltPromotion
+
+    updateBeltPromotion(
+        beltPromotionId: ID!
+        category: PromotionType
+        note: String
+        date: DateTime
+         userId: ID
+    ): BeltPromotion
+
+    deleteBeltPromotion(beltPromotionId: ID!): BeltPromotion
+
+
+}
+input CheckInCreateWithoutClassSessionInput {
+  id: ID
+  checked: Boolean
+  userId: ID!
+}
+
+input TagCreateInput {
+  id: ID
+  name: String!
+  technique: TechniqueCreateOneWithoutTagsInput
+}
+
+input TechniqueCreateOneWithoutTagsInput {
+    connect: TechniqueWhereUniqueInput
+}
+
+input TagCreateWithoutTechniqueInput {
+    id: ID
+    name: String!
+}
+input TechniqueWhereUniqueInput {
+    id: ID
+}
+
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+
+  email: String!
+  phone: String
+  dob: String
+  joinDate: String
+  position: PositionType
+  beltColor: BeltColor
+  stripeCount: Int
+  beltPromotions: [BeltPromotion]
+  academies: [Academy!]!
+  checkIns: [CheckIn]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type BeltPromotion{
+  id: ID!
+  category: PromotionType
+  note: String!
+  date: DateTime
+  createdAt: DateTime!
+  updateAt: DateTime!
+  user: User!
+}
+
+enum PromotionType{
+  BELT
+  STRIPE
+}
+
+enum PositionType{
+    STUDENT
+    INSTRUCTOR
+    ADMIN
+}
+
+enum BeltColor{
+    WHITE
+    BLUE
+    PURPLE
+    BROWN
+    BLACK
+}
+
+type ClassSession {
+  id: ID!
+  date: DateTime
+  instructor: Instructor!
+  classPeriod: ClassPeriod!
+  academy: Academy!
+  techniques: [Technique]
+  checkIns: [CheckIn]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+}
+
+type ClassPeriod {
+  id: ID!
+  day: String!
+  time: String
+  title: String
+  instructor: Instructor
+  classSessions: [ClassSession]
+  academy: Academy!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Academy {
+  id: ID!
+  title: String!
+  classes: [ClassSession]
+  users: [User!]!
+  classPeriods: [ClassPeriod]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Technique {
+  id: ID!
+  title: String!
+  tags: [Tag]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Tag{
+  id: ID!
+  name: String!
+  technique: Technique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+}
+
+type Instructor {
+  id: ID!
+  user: User
+}
+
+type CheckIn {
+  id: ID!
+  checked: Boolean
+  user: User!
+  classSession: ClassSession
+  event: Event
+  createdAt: DateTime!
+}
+
+type Event {
+  id: ID!
+  title: String!
+  eventImage: String
+  day: String
+  time: String
+  date: DateTime
+  type: String
+  price: String
+  location: String
+  note: String
+  publish: Boolean
+  checkIns: [CheckIn]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+scalar DateTime
+scalar Long

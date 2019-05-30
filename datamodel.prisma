@@ -1,0 +1,135 @@
+type User {
+  id: ID! @id
+  password: String!
+  firstName: String!
+  lastName: String!
+  email: String! @unique
+  phone: String
+  dob: String
+  joinDate: String
+  position: PositionType @default(value: STUDENT)
+  beltColor: BeltColor
+  stripeCount: Int
+  beltPromotions: [BeltPromotion] @relation(name: "UserBeltPromotions", onDelete: CASCADE)
+  academies: [Academy!]! @relation(name: "AcademyRoster", onDelete: SET_NULL )
+  checkIns: [CheckIn] @relation(name: "CheckInsByPerson", onDelete: CASCADE)
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type BeltPromotion{
+  id: ID! @id
+  category: PromotionType
+  note: String!
+  date: DateTime
+  createdAt: DateTime! @createdAt
+  updateAt: DateTime! @updatedAt
+  user: User! @relation(name: "UserBeltPromotions", onDelete: SET_NULL)
+}
+
+enum PromotionType{
+  BELT
+  STRIPE
+}
+
+enum PositionType {
+    STUDENT
+    INSTRUCTOR
+    ADMIN
+}
+
+enum BeltColor{
+    WHITE
+    BLUE
+    PURPLE
+    BROWN
+    BLACK
+}
+
+type ClassSession {
+  id: ID! @id
+  date: DateTime
+  instructor: Instructor!
+  classPeriod: ClassPeriod! @relation(name:"SessionsOfPeriod")
+  academy: Academy! @relation(name: "ClassLocation", link: INLINE, onDelete: SET_NULL)
+  techniques: [Technique]
+  checkIns: [CheckIn] @relation(name: "CheckInsForClass", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+
+}
+
+type ClassPeriod {
+  id: ID! @id
+  day: String!
+  time: String
+  title: String
+  instructor: Instructor
+  classSessions: [ClassSession] @relation(name:"SessionsOfPeriod", onDelete:CASCADE)
+  academy: Academy! @relation(name:"ClassSchedule")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Academy {
+  id: ID! @id
+  title: String!
+  classes: [ClassSession] @relation(name: "ClassLocation", onDelete: SET_NULL)
+  users: [User!]! @relation(name: "AcademyRoster", onDelete: SET_NULL)
+  classPeriods: [ClassPeriod] @relation(name:"ClassSchedule", onDelete:CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Technique {
+  id: ID! @id
+  title: String!
+  tags: [Tag] @relation(name: "TechniqueTag")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Tag{
+  id: ID! @id
+  name: String!
+  technique: Technique @relation(name: "TechniqueTag", link: INLINE, onDelete: SET_NULL)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+
+}
+
+type Instructor {
+  id: ID! @id
+  user: User
+}
+
+type CheckIn {
+  id: ID! @id
+  checked: Boolean @default(value: false)
+  user: User! @relation(name: "CheckInsByPerson", onDelete: SET_NULL)
+  classSession: ClassSession @relation(name: "CheckInsForClass")
+  event: Event @relation(name: "CheckInsForEvent", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+}
+
+type Event {
+  id: ID! @id
+  title: String!
+  eventImage: String
+  day: String
+  time: String
+  date: DateTime
+  type: String
+  price: String
+  location: String
+  note: String
+  publish: Boolean @default(value: false)
+  checkIns: [CheckIn] @relation(name: "CheckInsForEvent", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+
+}
+
+
+
