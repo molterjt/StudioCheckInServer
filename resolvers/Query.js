@@ -1,5 +1,8 @@
 const { prisma } = require('../generated/prisma-client');
 const { getUserId } = require('../util');
+const moment = require('moment');
+
+
 
 const Query = {
     me: (parent, args, context) => {
@@ -59,6 +62,8 @@ const Query = {
     },
     classPeriodsToday(root, args, context){
         const today = new Date();
+        const myTime = new Date().toLocaleTimeString();
+        console.log('myTime: ', myTime);
         const weekday = new Array(7);
         weekday[0] = "Sunday";
         weekday[1] = "Monday";
@@ -74,7 +79,32 @@ const Query = {
                 day: (args.daySearch ? args.daySearch : day),
                 academy:{
                     title: args.academyTitle
-                }
+                },
+            },
+            orderBy: "stamp_ASC",
+        })
+    },
+    classPeriodsTodayWithTime(root, args, context){
+        const today = new Date();
+        const myTime = new Date().toLocaleTimeString();
+        console.log('myTime: ', myTime);
+        const weekday = new Array(7);
+        weekday[0] = "Sunday";
+        weekday[1] = "Monday";
+        weekday[2] = "Tuesday";
+        weekday[3] = "Wednesday";
+        weekday[4] = "Thursday";
+        weekday[5] = "Friday";
+        weekday[6] = "Saturday";
+
+        const day = weekday[today.getDay()];
+        return context.prisma.classPeriods({
+            where:{
+                day: (args.daySearch ? args.daySearch : day),
+                academy:{
+                    title: args.academyTitle
+                },
+                time: (args.timeSearch ? args.timeSearch : myTime)
             },
         })
     },
@@ -96,6 +126,20 @@ const Query = {
     checkIns(root, args, context){
         return context.prisma.checkIns({})
     },
+    checkInsByUserAndClassSession(root, args, context){
+        return context.prisma.checkIns({
+            where: {
+                user: {
+                    id: args.userId
+                },
+                AND: {
+                    classSession: {
+                        title: args.classSessionTitle
+                    }
+                }
+            }
+        })
+    },
     checkIn(root, args, context){
         return context.prisma.checkIn({id: args.checkinId})
     },
@@ -110,6 +154,15 @@ const Query = {
     },
     classSession(root, args, context){
         return context.prisma.classSession({id: args.classSessionId})
+    },
+    classSessionsWhereClassPeriod(root, args, context){
+        const today = new Date().toDateString();
+        const titleSelector = today.concat("__", args.classPeriodId);
+        return context.prisma.classSessions({
+            where:{
+                title: titleSelector
+            }
+        })
     },
     beltPromotions(root, args, context){
         return context.prisma.beltPromotions({})

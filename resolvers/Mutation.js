@@ -216,15 +216,15 @@ const Mutation = {
                 connect: {id: args.userId},
             },
             classSession: {
-                connect: {id:  args.classSessionId}
+                connect: {title: args.classSessionTitle}
             },
-            event: {
+            event: args.eventId ? {
                 connect:{id: args.eventId}
-            }
+            } : null
         })
     },
     deleteCheckIn(root, args, context){
-        return context.prisma.deleteCheckIn({id: args.checkInId})
+        return context.prisma.deleteCheckIn({id: args.id})
     },
     updateCheckIn(root, args, context){
         return context.prisma
@@ -247,6 +247,7 @@ const Mutation = {
         return context.prisma.createClassPeriod({
             day: args.day,
             time: args.time,
+            stamp: args.stamp,
             title: args.title,
             instructor: {
                 connect: {id: args.instructorId}
@@ -262,9 +263,11 @@ const Mutation = {
                 day: args.day,
                 time: args.time,
                 title: args.title,
-                instructor: {
+                stamp: args.stamp,
+
+                instructor: args.instructorId ? {
                     connect: {id: args.instructorId}
-                },
+                } : null,
                 academy: args.academyId ? {
                     connect: {id: args.academyId}
                 } : null,
@@ -283,9 +286,14 @@ const Mutation = {
     },
     /*** ClassSession  ***/
     createClassSession(root, args, context){
+        const today =  new Date().toDateString();
         return context.prisma.createClassSession({
+            title: today.concat("__", args.classPeriodId) ,
             academy: {
                 connect: {id: args.academyId}
+            },
+            classPeriod: {
+              connect: {id: args.classPeriodId}
             },
             techniques: {
                 connect: args.techniqueIds.map((tech) => ({
@@ -295,7 +303,7 @@ const Mutation = {
             instructor: {
                 connect:{id: args.instructorId}
             },
-            date: new Date()
+            date: today
         });
     },
     deleteClassSession(root, args, context){
@@ -315,6 +323,9 @@ const Mutation = {
                             id: tech
                         }))
                     },
+                    classPeriod: {
+                        connect: {id: args.classPeriodId}
+                    },
                     instructor: {
                         connect:{id: args.instructorId}
                     },
@@ -329,6 +340,45 @@ const Mutation = {
                     }
                 }
             })
+    },
+
+    updateOrCreateClassSession(root,args, context){
+        const today = new Date().toDateString();
+        const titleSelector = today.concat("__", args.classPeriodId);
+        return context.prisma
+          .upsertClassSession({
+              where: {
+                  title: args.title ? args.title : titleSelector
+              },
+              update:{
+                  academy: {
+                      connect: {id: args.academyId}
+                  },
+                  techniques: args.techniqueIds ? { connect: args.techniqueIds.map( (tech) => ( {id: tech} ) ) } : null,
+                  instructor: {
+                      connect:{id: args.instructorId}
+                  },
+                  date: args.date,
+                  checkIns: args.checkInValues ? {create: args.checkInValues.map( (obj) => ( {user: { connect:{id: obj.userId} }, checked: obj.checked} ) ) } : null,
+
+              },
+
+              create: {
+                  title: titleSelector,
+                  academy: {
+                      connect: {id: args.academyId}
+                  },
+                  techniques: args.techniqueIds ? { connect: args.techniqueIds.map( (tech) => ( {id: tech} ) ) } : null,
+                  classPeriod: {
+                      connect: {id: args.classPeriodId}
+                  },
+                  instructor: {
+                      connect:{id: args.instructorId}
+                  },
+                  date:  new Date().toDateString(),
+                  checkIns: args.checkInValues ? {create: args.checkInValues.map( (obj) => ( {user: { connect:{id: obj.userId} }, checked: obj.checked} ) ) } : null,
+              }
+          })
     },
     /*** BeltPromotion  ***/
     createBeltPromotion(root, args, context){

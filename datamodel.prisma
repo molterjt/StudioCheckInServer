@@ -49,7 +49,8 @@ enum BeltColor{
 
 type ClassSession {
   id: ID! @id
-  date: DateTime
+  title: String! @unique
+  date: String
   instructor: Instructor!
   classPeriod: ClassPeriod! @relation(name:"SessionsOfPeriod")
   academy: Academy! @relation(name: "ClassLocation", link: INLINE, onDelete: SET_NULL)
@@ -64,6 +65,7 @@ type ClassPeriod {
   id: ID! @id
   day: String!
   time: String
+  stamp: DateTime
   title: String
   instructor: Instructor
   classSessions: [ClassSession] @relation(name:"SessionsOfPeriod", onDelete:CASCADE)

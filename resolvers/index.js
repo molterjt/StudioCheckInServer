@@ -16,6 +16,11 @@ module.exports = {
                 .user({id: root.id})
                 .beltPromotions()
         },
+        checkIns(root, args, context){
+            return context.prisma
+                .user({id: root.id})
+                .checkIns()
+        },
 
     },
     BeltPromotion: {

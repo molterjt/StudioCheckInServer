@@ -473,6 +473,8 @@ export type PromotionType = "BELT" | "STRIPE";
 export type ClassSessionOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "title_ASC"
+  | "title_DESC"
   | "date_ASC"
   | "date_DESC"
   | "createdAt_ASC"
@@ -567,6 +569,8 @@ export type ClassPeriodOrderByInput =
   | "day_DESC"
   | "time_ASC"
   | "time_DESC"
+  | "stamp_ASC"
+  | "stamp_DESC"
   | "title_ASC"
   | "title_DESC"
   | "createdAt_ASC"
@@ -625,14 +629,34 @@ export interface ClassSessionWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  date?: Maybe<DateTimeInput>;
-  date_not?: Maybe<DateTimeInput>;
-  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_lt?: Maybe<DateTimeInput>;
-  date_lte?: Maybe<DateTimeInput>;
-  date_gt?: Maybe<DateTimeInput>;
-  date_gte?: Maybe<DateTimeInput>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  date?: Maybe<String>;
+  date_not?: Maybe<String>;
+  date_in?: Maybe<String[] | String>;
+  date_not_in?: Maybe<String[] | String>;
+  date_lt?: Maybe<String>;
+  date_lte?: Maybe<String>;
+  date_gt?: Maybe<String>;
+  date_gte?: Maybe<String>;
+  date_contains?: Maybe<String>;
+  date_not_contains?: Maybe<String>;
+  date_starts_with?: Maybe<String>;
+  date_not_starts_with?: Maybe<String>;
+  date_ends_with?: Maybe<String>;
+  date_not_ends_with?: Maybe<String>;
   instructor?: Maybe<InstructorWhereInput>;
   classPeriod?: Maybe<ClassPeriodWhereInput>;
   academy?: Maybe<AcademyWhereInput>;
@@ -1008,6 +1032,14 @@ export interface ClassPeriodWhereInput {
   time_not_starts_with?: Maybe<String>;
   time_ends_with?: Maybe<String>;
   time_not_ends_with?: Maybe<String>;
+  stamp?: Maybe<DateTimeInput>;
+  stamp_not?: Maybe<DateTimeInput>;
+  stamp_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  stamp_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  stamp_lt?: Maybe<DateTimeInput>;
+  stamp_lte?: Maybe<DateTimeInput>;
+  stamp_gt?: Maybe<DateTimeInput>;
+  stamp_gte?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
   title_not?: Maybe<String>;
   title_in?: Maybe<String[] | String>;
@@ -1360,6 +1392,7 @@ export type ClassPeriodWhereUniqueInput = AtLeastOne<{
 
 export type ClassSessionWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  title?: Maybe<String>;
 }>;
 
 export type EventWhereUniqueInput = AtLeastOne<{
@@ -1403,7 +1436,8 @@ export interface ClassSessionCreateManyWithoutAcademyInput {
 
 export interface ClassSessionCreateWithoutAcademyInput {
   id?: Maybe<ID_Input>;
-  date?: Maybe<DateTimeInput>;
+  title: String;
+  date?: Maybe<String>;
   instructor: InstructorCreateOneInput;
   classPeriod: ClassPeriodCreateOneWithoutClassSessionsInput;
   techniques?: Maybe<TechniqueCreateManyInput>;
@@ -1484,6 +1518,7 @@ export interface ClassPeriodCreateWithoutAcademyInput {
   id?: Maybe<ID_Input>;
   day: String;
   time?: Maybe<String>;
+  stamp?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
   instructor?: Maybe<InstructorCreateOneInput>;
   classSessions?: Maybe<ClassSessionCreateManyWithoutClassPeriodInput>;
@@ -1501,7 +1536,8 @@ export interface ClassSessionCreateManyWithoutClassPeriodInput {
 
 export interface ClassSessionCreateWithoutClassPeriodInput {
   id?: Maybe<ID_Input>;
-  date?: Maybe<DateTimeInput>;
+  title: String;
+  date?: Maybe<String>;
   instructor: InstructorCreateOneInput;
   academy: AcademyCreateOneWithoutClassesInput;
   techniques?: Maybe<TechniqueCreateManyInput>;
@@ -1564,7 +1600,8 @@ export interface ClassSessionCreateOneWithoutCheckInsInput {
 
 export interface ClassSessionCreateWithoutCheckInsInput {
   id?: Maybe<ID_Input>;
-  date?: Maybe<DateTimeInput>;
+  title: String;
+  date?: Maybe<String>;
   instructor: InstructorCreateOneInput;
   classPeriod: ClassPeriodCreateOneWithoutClassSessionsInput;
   academy: AcademyCreateOneWithoutClassesInput;
@@ -1580,6 +1617,7 @@ export interface ClassPeriodCreateWithoutClassSessionsInput {
   id?: Maybe<ID_Input>;
   day: String;
   time?: Maybe<String>;
+  stamp?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
   instructor?: Maybe<InstructorCreateOneInput>;
   academy: AcademyCreateOneWithoutClassPeriodsInput;
@@ -1718,7 +1756,8 @@ export interface ClassSessionUpdateWithWhereUniqueWithoutAcademyInput {
 }
 
 export interface ClassSessionUpdateWithoutAcademyDataInput {
-  date?: Maybe<DateTimeInput>;
+  title?: Maybe<String>;
+  date?: Maybe<String>;
   instructor?: Maybe<InstructorUpdateOneRequiredInput>;
   classPeriod?: Maybe<ClassPeriodUpdateOneRequiredWithoutClassSessionsInput>;
   techniques?: Maybe<TechniqueUpdateManyInput>;
@@ -1952,6 +1991,7 @@ export interface ClassPeriodUpdateWithWhereUniqueWithoutAcademyInput {
 export interface ClassPeriodUpdateWithoutAcademyDataInput {
   day?: Maybe<String>;
   time?: Maybe<String>;
+  stamp?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
   instructor?: Maybe<InstructorUpdateOneInput>;
   classSessions?: Maybe<ClassSessionUpdateManyWithoutClassPeriodInput>;
@@ -2007,7 +2047,8 @@ export interface ClassSessionUpdateWithWhereUniqueWithoutClassPeriodInput {
 }
 
 export interface ClassSessionUpdateWithoutClassPeriodDataInput {
-  date?: Maybe<DateTimeInput>;
+  title?: Maybe<String>;
+  date?: Maybe<String>;
   instructor?: Maybe<InstructorUpdateOneRequiredInput>;
   academy?: Maybe<AcademyUpdateOneRequiredWithoutClassesInput>;
   techniques?: Maybe<TechniqueUpdateManyInput>;
@@ -2113,7 +2154,8 @@ export interface ClassSessionUpdateOneWithoutCheckInsInput {
 }
 
 export interface ClassSessionUpdateWithoutCheckInsDataInput {
-  date?: Maybe<DateTimeInput>;
+  title?: Maybe<String>;
+  date?: Maybe<String>;
   instructor?: Maybe<InstructorUpdateOneRequiredInput>;
   classPeriod?: Maybe<ClassPeriodUpdateOneRequiredWithoutClassSessionsInput>;
   academy?: Maybe<AcademyUpdateOneRequiredWithoutClassesInput>;
@@ -2130,6 +2172,7 @@ export interface ClassPeriodUpdateOneRequiredWithoutClassSessionsInput {
 export interface ClassPeriodUpdateWithoutClassSessionsDataInput {
   day?: Maybe<String>;
   time?: Maybe<String>;
+  stamp?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
   instructor?: Maybe<InstructorUpdateOneInput>;
   academy?: Maybe<AcademyUpdateOneRequiredWithoutClassPeriodsInput>;
@@ -2695,14 +2738,34 @@ export interface ClassSessionScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  date?: Maybe<DateTimeInput>;
-  date_not?: Maybe<DateTimeInput>;
-  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_lt?: Maybe<DateTimeInput>;
-  date_lte?: Maybe<DateTimeInput>;
-  date_gt?: Maybe<DateTimeInput>;
-  date_gte?: Maybe<DateTimeInput>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  date?: Maybe<String>;
+  date_not?: Maybe<String>;
+  date_in?: Maybe<String[] | String>;
+  date_not_in?: Maybe<String[] | String>;
+  date_lt?: Maybe<String>;
+  date_lte?: Maybe<String>;
+  date_gt?: Maybe<String>;
+  date_gte?: Maybe<String>;
+  date_contains?: Maybe<String>;
+  date_not_contains?: Maybe<String>;
+  date_starts_with?: Maybe<String>;
+  date_not_starts_with?: Maybe<String>;
+  date_ends_with?: Maybe<String>;
+  date_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -2730,7 +2793,8 @@ export interface ClassSessionUpdateManyWithWhereNestedInput {
 }
 
 export interface ClassSessionUpdateManyDataInput {
-  date?: Maybe<DateTimeInput>;
+  title?: Maybe<String>;
+  date?: Maybe<String>;
 }
 
 export interface ClassPeriodUpsertWithWhereUniqueWithoutAcademyInput {
@@ -2782,6 +2846,14 @@ export interface ClassPeriodScalarWhereInput {
   time_not_starts_with?: Maybe<String>;
   time_ends_with?: Maybe<String>;
   time_not_ends_with?: Maybe<String>;
+  stamp?: Maybe<DateTimeInput>;
+  stamp_not?: Maybe<DateTimeInput>;
+  stamp_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  stamp_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  stamp_lt?: Maybe<DateTimeInput>;
+  stamp_lte?: Maybe<DateTimeInput>;
+  stamp_gt?: Maybe<DateTimeInput>;
+  stamp_gte?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
   title_not?: Maybe<String>;
   title_in?: Maybe<String[] | String>;
@@ -2825,6 +2897,7 @@ export interface ClassPeriodUpdateManyWithWhereNestedInput {
 export interface ClassPeriodUpdateManyDataInput {
   day?: Maybe<String>;
   time?: Maybe<String>;
+  stamp?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
 }
 
@@ -3000,6 +3073,7 @@ export interface ClassPeriodCreateInput {
   id?: Maybe<ID_Input>;
   day: String;
   time?: Maybe<String>;
+  stamp?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
   instructor?: Maybe<InstructorCreateOneInput>;
   classSessions?: Maybe<ClassSessionCreateManyWithoutClassPeriodInput>;
@@ -3009,6 +3083,7 @@ export interface ClassPeriodCreateInput {
 export interface ClassPeriodUpdateInput {
   day?: Maybe<String>;
   time?: Maybe<String>;
+  stamp?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
   instructor?: Maybe<InstructorUpdateOneInput>;
   classSessions?: Maybe<ClassSessionUpdateManyWithoutClassPeriodInput>;
@@ -3018,12 +3093,14 @@ export interface ClassPeriodUpdateInput {
 export interface ClassPeriodUpdateManyMutationInput {
   day?: Maybe<String>;
   time?: Maybe<String>;
+  stamp?: Maybe<DateTimeInput>;
   title?: Maybe<String>;
 }
 
 export interface ClassSessionCreateInput {
   id?: Maybe<ID_Input>;
-  date?: Maybe<DateTimeInput>;
+  title: String;
+  date?: Maybe<String>;
   instructor: InstructorCreateOneInput;
   classPeriod: ClassPeriodCreateOneWithoutClassSessionsInput;
   academy: AcademyCreateOneWithoutClassesInput;
@@ -3032,7 +3109,8 @@ export interface ClassSessionCreateInput {
 }
 
 export interface ClassSessionUpdateInput {
-  date?: Maybe<DateTimeInput>;
+  title?: Maybe<String>;
+  date?: Maybe<String>;
   instructor?: Maybe<InstructorUpdateOneRequiredInput>;
   classPeriod?: Maybe<ClassPeriodUpdateOneRequiredWithoutClassSessionsInput>;
   academy?: Maybe<AcademyUpdateOneRequiredWithoutClassesInput>;
@@ -3041,7 +3119,8 @@ export interface ClassSessionUpdateInput {
 }
 
 export interface ClassSessionUpdateManyMutationInput {
-  date?: Maybe<DateTimeInput>;
+  title?: Maybe<String>;
+  date?: Maybe<String>;
 }
 
 export interface EventCreateInput {
@@ -3484,7 +3563,8 @@ export interface AcademyNullablePromise
 
 export interface ClassSession {
   id: ID_Output;
-  date?: DateTimeOutput;
+  title: String;
+  date?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -3493,7 +3573,8 @@ export interface ClassSessionPromise
   extends Promise<ClassSession>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  date: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  date: () => Promise<String>;
   instructor: <T = InstructorPromise>() => T;
   classPeriod: <T = ClassPeriodPromise>() => T;
   academy: <T = AcademyPromise>() => T;
@@ -3523,7 +3604,8 @@ export interface ClassSessionSubscription
   extends Promise<AsyncIterator<ClassSession>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  date: () => Promise<AsyncIterator<String>>;
   instructor: <T = InstructorSubscription>() => T;
   classPeriod: <T = ClassPeriodSubscription>() => T;
   academy: <T = AcademySubscription>() => T;
@@ -3553,7 +3635,8 @@ export interface ClassSessionNullablePromise
   extends Promise<ClassSession | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  date: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  date: () => Promise<String>;
   instructor: <T = InstructorPromise>() => T;
   classPeriod: <T = ClassPeriodPromise>() => T;
   academy: <T = AcademyPromise>() => T;
@@ -3934,6 +4017,7 @@ export interface ClassPeriod {
   id: ID_Output;
   day: String;
   time?: String;
+  stamp?: DateTimeOutput;
   title?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -3943,6 +4027,7 @@ export interface ClassPeriodPromise extends Promise<ClassPeriod>, Fragmentable {
   id: () => Promise<ID_Output>;
   day: () => Promise<String>;
   time: () => Promise<String>;
+  stamp: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
   instructor: <T = InstructorPromise>() => T;
   classSessions: <T = FragmentableArray<ClassSession>>(args?: {
@@ -3965,6 +4050,7 @@ export interface ClassPeriodSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   day: () => Promise<AsyncIterator<String>>;
   time: () => Promise<AsyncIterator<String>>;
+  stamp: () => Promise<AsyncIterator<DateTimeOutput>>;
   title: () => Promise<AsyncIterator<String>>;
   instructor: <T = InstructorSubscription>() => T;
   classSessions: <T = Promise<AsyncIterator<ClassSessionSubscription>>>(args?: {
@@ -3987,6 +4073,7 @@ export interface ClassPeriodNullablePromise
   id: () => Promise<ID_Output>;
   day: () => Promise<String>;
   time: () => Promise<String>;
+  stamp: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
   instructor: <T = InstructorPromise>() => T;
   classSessions: <T = FragmentableArray<ClassSession>>(args?: {
@@ -4866,6 +4953,7 @@ export interface ClassPeriodPreviousValues {
   id: ID_Output;
   day: String;
   time?: String;
+  stamp?: DateTimeOutput;
   title?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -4877,6 +4965,7 @@ export interface ClassPeriodPreviousValuesPromise
   id: () => Promise<ID_Output>;
   day: () => Promise<String>;
   time: () => Promise<String>;
+  stamp: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
@@ -4888,6 +4977,7 @@ export interface ClassPeriodPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   day: () => Promise<AsyncIterator<String>>;
   time: () => Promise<AsyncIterator<String>>;
+  stamp: () => Promise<AsyncIterator<DateTimeOutput>>;
   title: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -4920,7 +5010,8 @@ export interface ClassSessionSubscriptionPayloadSubscription
 
 export interface ClassSessionPreviousValues {
   id: ID_Output;
-  date?: DateTimeOutput;
+  title: String;
+  date?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -4929,7 +5020,8 @@ export interface ClassSessionPreviousValuesPromise
   extends Promise<ClassSessionPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  date: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  date: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -4938,7 +5030,8 @@ export interface ClassSessionPreviousValuesSubscription
   extends Promise<AsyncIterator<ClassSessionPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  date: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -5250,6 +5343,11 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
+
+/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -5258,11 +5356,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.

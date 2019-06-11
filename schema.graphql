@@ -13,16 +13,20 @@ type Query{
     techniques: [Technique]!
     technique(techniqueId: ID!): Technique
     checkIns: [CheckIn]!
+    checkInsByUserAndClassSession(userId: ID, classSessionTitle: String): [CheckIn]
+
     checkIn(checkinId: ID!): CheckIn
     tags: [Tag!]!
     tag(tagId: ID!): Tag
     classSessions: [ClassSession!]!
     classSession(classSessionId: ID!): ClassSession
+    classSessionsWhereClassPeriod(classPeriodId: ID!): [ClassSession]
     classPeriods: [ClassPeriod!]!
     classPeriod(classPeriodId: ID!): ClassPeriod
     beltPromotions: [BeltPromotion!]!
     beltPromotion(beltPromotionId: ID!): BeltPromotion
     academyRoster(academyTitle: String!): [User]
+    classPeriodsTodayWithTime(academyTitle: String, daySearch: String, timeSearch: String): [ClassPeriod]
     classPeriodsToday(academyTitle: String, daySearch: String): [ClassPeriod]
     classPeriodsByAcademy(academyTitle: String): [ClassPeriod]
     events: [Event!]!
@@ -117,7 +121,7 @@ type Mutation{
     createCheckIn(
         checked: Boolean
         userId: ID!
-        classSessionId: ID
+        classSessionTitle: String
         eventId: ID
     ): CheckIn
 
@@ -128,7 +132,7 @@ type Mutation{
         eventId: ID
     ): CheckIn
 
-    deleteCheckIn(checkInId: ID!): CheckIn
+    deleteCheckIn(id: ID!): CheckIn
 
     createEvent(
       title: String!
@@ -157,10 +161,21 @@ type Mutation{
           checkInIds: [ID]
     ): Event
 
+    updateOrCreateClassSession(
+        date: String
+        title: String
+        classPeriodId: ID
+        instructorId: ID
+        academyId: ID
+        techniqueIds: [ID]
+        checkInValues: [CheckInCreateWithoutClassSessionInput]
+    ): ClassSession
 
     createClassSession(
-        date: DateTime
+        date: String
+        title: String!
         instructorId: ID!
+        classPeriodId: ID!
         academyId: ID!
         techniqueIds: [ID]
         checkIns: [ID]
@@ -168,7 +183,9 @@ type Mutation{
 
     updateClassSession(
         classSessionId: ID!
-        date: DateTime
+        title: String
+        date: String
+        classPeriodId: ID
         instructorId: ID
         academyId: ID
         techniqueIds: [ID]
@@ -181,6 +198,7 @@ type Mutation{
     createClassPeriod(
         day: String!
         time: String!
+        stamp: DateTime
         title: String
         instructorId: ID
         classSessionIds: [ID]
@@ -190,6 +208,7 @@ type Mutation{
         classPeriodId: ID!
         day: String
         time: String
+        stamp: DateTime
         title: String
         instructorId: ID
         academyId: ID
@@ -292,7 +311,8 @@ enum BeltColor{
 
 type ClassSession {
   id: ID!
-  date: DateTime
+  title: String!
+  date: String
   instructor: Instructor!
   classPeriod: ClassPeriod!
   academy: Academy!
@@ -307,6 +327,7 @@ type ClassPeriod {
   id: ID!
   day: String!
   time: String
+  stamp: DateTime
   title: String
   instructor: Instructor
   classSessions: [ClassSession]

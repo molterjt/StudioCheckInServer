@@ -894,6 +894,7 @@ type ClassPeriod {
   id: ID!
   day: String!
   time: String
+  stamp: DateTime
   title: String
   instructor: Instructor
   classSessions(where: ClassSessionWhereInput, orderBy: ClassSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ClassSession!]
@@ -912,6 +913,7 @@ input ClassPeriodCreateInput {
   id: ID
   day: String!
   time: String
+  stamp: DateTime
   title: String
   instructor: InstructorCreateOneInput
   classSessions: ClassSessionCreateManyWithoutClassPeriodInput
@@ -932,6 +934,7 @@ input ClassPeriodCreateWithoutAcademyInput {
   id: ID
   day: String!
   time: String
+  stamp: DateTime
   title: String
   instructor: InstructorCreateOneInput
   classSessions: ClassSessionCreateManyWithoutClassPeriodInput
@@ -941,6 +944,7 @@ input ClassPeriodCreateWithoutClassSessionsInput {
   id: ID
   day: String!
   time: String
+  stamp: DateTime
   title: String
   instructor: InstructorCreateOneInput
   academy: AcademyCreateOneWithoutClassPeriodsInput!
@@ -958,6 +962,8 @@ enum ClassPeriodOrderByInput {
   day_DESC
   time_ASC
   time_DESC
+  stamp_ASC
+  stamp_DESC
   title_ASC
   title_DESC
   createdAt_ASC
@@ -970,6 +976,7 @@ type ClassPeriodPreviousValues {
   id: ID!
   day: String!
   time: String
+  stamp: DateTime
   title: String
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -1018,6 +1025,14 @@ input ClassPeriodScalarWhereInput {
   time_not_starts_with: String
   time_ends_with: String
   time_not_ends_with: String
+  stamp: DateTime
+  stamp_not: DateTime
+  stamp_in: [DateTime!]
+  stamp_not_in: [DateTime!]
+  stamp_lt: DateTime
+  stamp_lte: DateTime
+  stamp_gt: DateTime
+  stamp_gte: DateTime
   title: String
   title_not: String
   title_in: [String!]
@@ -1074,6 +1089,7 @@ input ClassPeriodSubscriptionWhereInput {
 input ClassPeriodUpdateInput {
   day: String
   time: String
+  stamp: DateTime
   title: String
   instructor: InstructorUpdateOneInput
   classSessions: ClassSessionUpdateManyWithoutClassPeriodInput
@@ -1083,12 +1099,14 @@ input ClassPeriodUpdateInput {
 input ClassPeriodUpdateManyDataInput {
   day: String
   time: String
+  stamp: DateTime
   title: String
 }
 
 input ClassPeriodUpdateManyMutationInput {
   day: String
   time: String
+  stamp: DateTime
   title: String
 }
 
@@ -1119,6 +1137,7 @@ input ClassPeriodUpdateOneRequiredWithoutClassSessionsInput {
 input ClassPeriodUpdateWithoutAcademyDataInput {
   day: String
   time: String
+  stamp: DateTime
   title: String
   instructor: InstructorUpdateOneInput
   classSessions: ClassSessionUpdateManyWithoutClassPeriodInput
@@ -1127,6 +1146,7 @@ input ClassPeriodUpdateWithoutAcademyDataInput {
 input ClassPeriodUpdateWithoutClassSessionsDataInput {
   day: String
   time: String
+  stamp: DateTime
   title: String
   instructor: InstructorUpdateOneInput
   academy: AcademyUpdateOneRequiredWithoutClassPeriodsInput
@@ -1191,6 +1211,14 @@ input ClassPeriodWhereInput {
   time_not_starts_with: String
   time_ends_with: String
   time_not_ends_with: String
+  stamp: DateTime
+  stamp_not: DateTime
+  stamp_in: [DateTime!]
+  stamp_not_in: [DateTime!]
+  stamp_lt: DateTime
+  stamp_lte: DateTime
+  stamp_gt: DateTime
+  stamp_gte: DateTime
   title: String
   title_not: String
   title_in: [String!]
@@ -1237,7 +1265,8 @@ input ClassPeriodWhereUniqueInput {
 
 type ClassSession {
   id: ID!
-  date: DateTime
+  title: String!
+  date: String
   instructor: Instructor!
   classPeriod: ClassPeriod!
   academy: Academy!
@@ -1255,7 +1284,8 @@ type ClassSessionConnection {
 
 input ClassSessionCreateInput {
   id: ID
-  date: DateTime
+  title: String!
+  date: String
   instructor: InstructorCreateOneInput!
   classPeriod: ClassPeriodCreateOneWithoutClassSessionsInput!
   academy: AcademyCreateOneWithoutClassesInput!
@@ -1280,7 +1310,8 @@ input ClassSessionCreateOneWithoutCheckInsInput {
 
 input ClassSessionCreateWithoutAcademyInput {
   id: ID
-  date: DateTime
+  title: String!
+  date: String
   instructor: InstructorCreateOneInput!
   classPeriod: ClassPeriodCreateOneWithoutClassSessionsInput!
   techniques: TechniqueCreateManyInput
@@ -1289,7 +1320,8 @@ input ClassSessionCreateWithoutAcademyInput {
 
 input ClassSessionCreateWithoutCheckInsInput {
   id: ID
-  date: DateTime
+  title: String!
+  date: String
   instructor: InstructorCreateOneInput!
   classPeriod: ClassPeriodCreateOneWithoutClassSessionsInput!
   academy: AcademyCreateOneWithoutClassesInput!
@@ -1298,7 +1330,8 @@ input ClassSessionCreateWithoutCheckInsInput {
 
 input ClassSessionCreateWithoutClassPeriodInput {
   id: ID
-  date: DateTime
+  title: String!
+  date: String
   instructor: InstructorCreateOneInput!
   academy: AcademyCreateOneWithoutClassesInput!
   techniques: TechniqueCreateManyInput
@@ -1313,6 +1346,8 @@ type ClassSessionEdge {
 enum ClassSessionOrderByInput {
   id_ASC
   id_DESC
+  title_ASC
+  title_DESC
   date_ASC
   date_DESC
   createdAt_ASC
@@ -1323,7 +1358,8 @@ enum ClassSessionOrderByInput {
 
 type ClassSessionPreviousValues {
   id: ID!
-  date: DateTime
+  title: String!
+  date: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1343,14 +1379,34 @@ input ClassSessionScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  date: DateTime
-  date_not: DateTime
-  date_in: [DateTime!]
-  date_not_in: [DateTime!]
-  date_lt: DateTime
-  date_lte: DateTime
-  date_gt: DateTime
-  date_gte: DateTime
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  date: String
+  date_not: String
+  date_in: [String!]
+  date_not_in: [String!]
+  date_lt: String
+  date_lte: String
+  date_gt: String
+  date_gte: String
+  date_contains: String
+  date_not_contains: String
+  date_starts_with: String
+  date_not_starts_with: String
+  date_ends_with: String
+  date_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1391,7 +1447,8 @@ input ClassSessionSubscriptionWhereInput {
 }
 
 input ClassSessionUpdateInput {
-  date: DateTime
+  title: String
+  date: String
   instructor: InstructorUpdateOneRequiredInput
   classPeriod: ClassPeriodUpdateOneRequiredWithoutClassSessionsInput
   academy: AcademyUpdateOneRequiredWithoutClassesInput
@@ -1400,11 +1457,13 @@ input ClassSessionUpdateInput {
 }
 
 input ClassSessionUpdateManyDataInput {
-  date: DateTime
+  title: String
+  date: String
 }
 
 input ClassSessionUpdateManyMutationInput {
-  date: DateTime
+  title: String
+  date: String
 }
 
 input ClassSessionUpdateManyWithoutAcademyInput {
@@ -1446,7 +1505,8 @@ input ClassSessionUpdateOneWithoutCheckInsInput {
 }
 
 input ClassSessionUpdateWithoutAcademyDataInput {
-  date: DateTime
+  title: String
+  date: String
   instructor: InstructorUpdateOneRequiredInput
   classPeriod: ClassPeriodUpdateOneRequiredWithoutClassSessionsInput
   techniques: TechniqueUpdateManyInput
@@ -1454,7 +1514,8 @@ input ClassSessionUpdateWithoutAcademyDataInput {
 }
 
 input ClassSessionUpdateWithoutCheckInsDataInput {
-  date: DateTime
+  title: String
+  date: String
   instructor: InstructorUpdateOneRequiredInput
   classPeriod: ClassPeriodUpdateOneRequiredWithoutClassSessionsInput
   academy: AcademyUpdateOneRequiredWithoutClassesInput
@@ -1462,7 +1523,8 @@ input ClassSessionUpdateWithoutCheckInsDataInput {
 }
 
 input ClassSessionUpdateWithoutClassPeriodDataInput {
-  date: DateTime
+  title: String
+  date: String
   instructor: InstructorUpdateOneRequiredInput
   academy: AcademyUpdateOneRequiredWithoutClassesInput
   techniques: TechniqueUpdateManyInput
@@ -1511,14 +1573,34 @@ input ClassSessionWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  date: DateTime
-  date_not: DateTime
-  date_in: [DateTime!]
-  date_not_in: [DateTime!]
-  date_lt: DateTime
-  date_lte: DateTime
-  date_gt: DateTime
-  date_gte: DateTime
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  date: String
+  date_not: String
+  date_in: [String!]
+  date_not_in: [String!]
+  date_lt: String
+  date_lte: String
+  date_gt: String
+  date_gte: String
+  date_contains: String
+  date_not_contains: String
+  date_starts_with: String
+  date_not_starts_with: String
+  date_ends_with: String
+  date_not_ends_with: String
   instructor: InstructorWhereInput
   classPeriod: ClassPeriodWhereInput
   academy: AcademyWhereInput
@@ -1551,6 +1633,7 @@ input ClassSessionWhereInput {
 
 input ClassSessionWhereUniqueInput {
   id: ID
+  title: String
 }
 
 scalar DateTime
