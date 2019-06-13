@@ -143,6 +143,18 @@ const Query = {
     checkIn(root, args, context){
         return context.prisma.checkIn({id: args.checkinId})
     },
+    checkInsFiveMostRecentByUser(root, args, context){
+        return context.prisma.checkIns({
+            where:{
+                user: {
+                    id: args.userId
+                }
+            },
+            orderBy: "createdAt_DESC",
+            first: 5,
+        })
+    },
+
     tags(root, args, context){
         return context.prisma.tags({})
     },

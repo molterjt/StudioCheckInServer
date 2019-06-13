@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="678c2ba2-d3f1-4fb1-b1d2-f2de08d43cfc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/datamodel.prisma" afterPath="$PROJECT_DIR$/datamodel.prisma" />
-      <change beforePath="$PROJECT_DIR$/generated/prisma-client/index.d.ts" afterPath="$PROJECT_DIR$/generated/prisma-client/index.d.ts" />
-      <change beforePath="$PROJECT_DIR$/generated/prisma-client/prisma-schema.js" afterPath="$PROJECT_DIR$/generated/prisma-client/prisma-schema.js" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
       <change beforePath="$PROJECT_DIR$/resolvers/Mutation.js" afterPath="$PROJECT_DIR$/resolvers/Mutation.js" />
       <change beforePath="$PROJECT_DIR$/resolvers/Query.js" afterPath="$PROJECT_DIR$/resolvers/Query.js" />
-      <change beforePath="$PROJECT_DIR$/resolvers/index.js" afterPath="$PROJECT_DIR$/resolvers/index.js" />
       <change beforePath="$PROJECT_DIR$/schema.graphql" afterPath="$PROJECT_DIR$/schema.graphql" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -50,8 +43,8 @@
           <file leaf-file-name="schema.graphql" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/schema.graphql">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="316">
-                  <caret line="134" column="20" lean-forward="false" selection-start-line="134" selection-start-column="20" selection-end-line="134" selection-end-column="20" />
+                <state relative-caret-position="575">
+                  <caret line="83" column="42" lean-forward="true" selection-start-line="83" selection-start-column="42" selection-end-line="83" selection-end-column="42" />
                   <folding />
                 </state>
               </provider>
@@ -114,10 +107,10 @@
           <file leaf-file-name="Query.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resolvers/Query.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-553">
-                  <caret line="19" column="36" lean-forward="true" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+                <state relative-caret-position="679">
+                  <caret line="154" column="10" lean-forward="true" selection-start-line="154" selection-start-column="10" selection-end-line="154" selection-end-column="10" />
                   <folding>
-                    <marker date="1560115617891" expanded="true" signature="151:186" ph="{...}" />
+                    <marker date="1560353119330" expanded="true" signature="151:186" ph="{...}" />
                   </folding>
                 </state>
               </provider>
@@ -136,8 +129,8 @@
           <file leaf-file-name="Mutation.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resolvers/Mutation.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="69">
-                  <caret line="209" column="0" lean-forward="true" selection-start-line="209" selection-start-column="0" selection-end-line="209" selection-end-column="0" />
+                <state relative-caret-position="243">
+                  <caret line="78" column="31" lean-forward="true" selection-start-line="78" selection-start-column="31" selection-end-line="78" selection-end-column="31" />
                   <folding />
                 </state>
               </provider>
@@ -198,8 +191,8 @@
         <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/resolvers/index.js" />
         <option value="$PROJECT_DIR$/datamodel.prisma" />
-        <option value="$PROJECT_DIR$/resolvers/Query.js" />
         <option value="$PROJECT_DIR$/schema.graphql" />
+        <option value="$PROJECT_DIR$/resolvers/Query.js" />
         <option value="$PROJECT_DIR$/resolvers/Mutation.js" />
       </list>
     </option>
@@ -221,11 +214,11 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="92" />
-    <option name="y" value="32" />
-    <option name="width" value="1603" />
-    <option name="height" value="808" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-7" />
+    <option name="y" value="23" />
+    <option name="width" value="1440" />
+    <option name="height" value="811" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -305,15 +298,15 @@
       <workItem from="1557973197977" duration="1111000" />
       <workItem from="1557974598400" duration="56389000" />
       <workItem from="1559658021994" duration="10938000" />
-      <workItem from="1559762416056" duration="24524000" />
+      <workItem from="1559762416056" duration="27643000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203482000" />
+    <option name="totallyTimeSpent" value="206601000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="23" width="1440" height="811" extended-state="6" />
+    <frame x="-7" y="23" width="1440" height="811" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.122621566" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -426,7 +419,7 @@
         <state relative-caret-position="1365">
           <caret line="91" column="6" lean-forward="true" selection-start-line="91" selection-start-column="6" selection-end-line="91" selection-end-column="6" />
           <folding>
-            <marker date="1560115617891" expanded="true" signature="151:186" ph="{...}" />
+            <marker date="1560353119330" expanded="true" signature="151:186" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -476,7 +469,7 @@
         <state relative-caret-position="900">
           <caret line="60" column="33" lean-forward="true" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="33" />
           <folding>
-            <marker date="1560115617891" expanded="true" signature="151:186" ph="{...}" />
+            <marker date="1560353119330" expanded="true" signature="151:186" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -542,7 +535,7 @@
         <state relative-caret-position="300">
           <caret line="20" column="18" lean-forward="true" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
           <folding>
-            <marker date="1560115617891" expanded="true" signature="151:186" ph="{...}" />
+            <marker date="1560353119330" expanded="true" signature="151:186" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -632,7 +625,7 @@
         <state relative-caret-position="165">
           <caret line="11" column="37" lean-forward="true" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
           <folding>
-            <marker date="1560115617891" expanded="true" signature="151:186" ph="{...}" />
+            <marker date="1560353119330" expanded="true" signature="151:186" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -724,10 +717,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resolvers/Query.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-553">
-          <caret line="19" column="36" lean-forward="true" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+        <state relative-caret-position="679">
+          <caret line="154" column="10" lean-forward="true" selection-start-line="154" selection-start-column="10" selection-end-line="154" selection-end-column="10" />
           <folding>
-            <marker date="1560115617891" expanded="true" signature="151:186" ph="{...}" />
+            <marker date="1560353119330" expanded="true" signature="151:186" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -742,8 +735,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resolvers/Mutation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="209" column="0" lean-forward="true" selection-start-line="209" selection-start-column="0" selection-end-line="209" selection-end-column="0" />
+        <state relative-caret-position="243">
+          <caret line="78" column="31" lean-forward="true" selection-start-line="78" selection-start-column="31" selection-end-line="78" selection-end-column="31" />
           <folding />
         </state>
       </provider>

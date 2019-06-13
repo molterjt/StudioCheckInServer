@@ -100,13 +100,13 @@ const Mutation = {
         return context.prisma.updateAcademy({
             data:{
                 title: args.title,
-                classes: {
+                classes: classSessions ? {
                     connect: classSessions.map((classId) => ({id: classId}))
-                },
-                users: {
+                } : null,
+                users: users ? {
                     connect: users.map((user) => ({id: user}))
 
-                }
+                } : null,
             },
             where:{
                 id: args.academyId
@@ -224,7 +224,7 @@ const Mutation = {
         })
     },
     deleteCheckIn(root, args, context){
-        return context.prisma.deleteCheckIn({id: args.id})
+        return context.prisma.deleteCheckIn({id: args.checkInId})
     },
     updateCheckIn(root, args, context){
         return context.prisma

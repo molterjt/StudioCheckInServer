@@ -14,7 +14,7 @@ type Query{
     technique(techniqueId: ID!): Technique
     checkIns: [CheckIn]!
     checkInsByUserAndClassSession(userId: ID, classSessionTitle: String): [CheckIn]
-
+    checkInsFiveMostRecentByUser(userId:ID!): [CheckIn]
     checkIn(checkinId: ID!): CheckIn
     tags: [Tag!]!
     tag(tagId: ID!): Tag
@@ -132,7 +132,7 @@ type Mutation{
         eventId: ID
     ): CheckIn
 
-    deleteCheckIn(id: ID!): CheckIn
+    deleteCheckIn(checkInId: ID!): CheckIn
 
     createEvent(
       title: String!
