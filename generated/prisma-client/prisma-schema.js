@@ -1985,6 +1985,9 @@ input EventWhereUniqueInput {
 type Instructor {
   id: ID!
   user: User
+  bio: String
+  lineage: String
+  photo: String
 }
 
 type InstructorConnection {
@@ -1996,6 +1999,9 @@ type InstructorConnection {
 input InstructorCreateInput {
   id: ID
   user: UserCreateOneInput
+  bio: String
+  lineage: String
+  photo: String
 }
 
 input InstructorCreateOneInput {
@@ -2011,10 +2017,19 @@ type InstructorEdge {
 enum InstructorOrderByInput {
   id_ASC
   id_DESC
+  bio_ASC
+  bio_DESC
+  lineage_ASC
+  lineage_DESC
+  photo_ASC
+  photo_DESC
 }
 
 type InstructorPreviousValues {
   id: ID!
+  bio: String
+  lineage: String
+  photo: String
 }
 
 type InstructorSubscriptionPayload {
@@ -2037,10 +2052,22 @@ input InstructorSubscriptionWhereInput {
 
 input InstructorUpdateDataInput {
   user: UserUpdateOneInput
+  bio: String
+  lineage: String
+  photo: String
 }
 
 input InstructorUpdateInput {
   user: UserUpdateOneInput
+  bio: String
+  lineage: String
+  photo: String
+}
+
+input InstructorUpdateManyMutationInput {
+  bio: String
+  lineage: String
+  photo: String
 }
 
 input InstructorUpdateOneInput {
@@ -2080,6 +2107,48 @@ input InstructorWhereInput {
   id_ends_with: ID
   id_not_ends_with: ID
   user: UserWhereInput
+  bio: String
+  bio_not: String
+  bio_in: [String!]
+  bio_not_in: [String!]
+  bio_lt: String
+  bio_lte: String
+  bio_gt: String
+  bio_gte: String
+  bio_contains: String
+  bio_not_contains: String
+  bio_starts_with: String
+  bio_not_starts_with: String
+  bio_ends_with: String
+  bio_not_ends_with: String
+  lineage: String
+  lineage_not: String
+  lineage_in: [String!]
+  lineage_not_in: [String!]
+  lineage_lt: String
+  lineage_lte: String
+  lineage_gt: String
+  lineage_gte: String
+  lineage_contains: String
+  lineage_not_contains: String
+  lineage_starts_with: String
+  lineage_not_starts_with: String
+  lineage_ends_with: String
+  lineage_not_ends_with: String
+  photo: String
+  photo_not: String
+  photo_in: [String!]
+  photo_not_in: [String!]
+  photo_lt: String
+  photo_lte: String
+  photo_gt: String
+  photo_gte: String
+  photo_contains: String
+  photo_not_contains: String
+  photo_starts_with: String
+  photo_not_starts_with: String
+  photo_ends_with: String
+  photo_not_ends_with: String
   AND: [InstructorWhereInput!]
   OR: [InstructorWhereInput!]
   NOT: [InstructorWhereInput!]
@@ -2130,6 +2199,7 @@ type Mutation {
   deleteManyEvents(where: EventWhereInput): BatchPayload!
   createInstructor(data: InstructorCreateInput!): Instructor!
   updateInstructor(data: InstructorUpdateInput!, where: InstructorWhereUniqueInput!): Instructor
+  updateManyInstructors(data: InstructorUpdateManyMutationInput!, where: InstructorWhereInput): BatchPayload!
   upsertInstructor(where: InstructorWhereUniqueInput!, create: InstructorCreateInput!, update: InstructorUpdateInput!): Instructor!
   deleteInstructor(where: InstructorWhereUniqueInput!): Instructor
   deleteManyInstructors(where: InstructorWhereInput): BatchPayload!

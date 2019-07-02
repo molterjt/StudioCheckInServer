@@ -19,7 +19,9 @@ module.exports = {
         checkIns(root, args, context){
             return context.prisma
                 .user({id: root.id})
-                .checkIns()
+                .checkIns({
+                    orderBy: "createdAt_DESC"
+                })
         },
 
     },

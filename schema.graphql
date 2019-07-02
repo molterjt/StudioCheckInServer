@@ -21,6 +21,7 @@ type Query{
     classSessions: [ClassSession!]!
     classSession(classSessionId: ID!): ClassSession
     classSessionsWhereClassPeriod(classPeriodId: ID!): [ClassSession]
+    classSessionsByAcademy(academyTitle: String, first: Int, skip: Int): [ClassSession]
     classPeriods: [ClassPeriod!]!
     classPeriod(classPeriodId: ID!): ClassPeriod
     beltPromotions: [BeltPromotion!]!
@@ -93,6 +94,12 @@ type Mutation{
     deleteAcademy(academyId: ID!): Academy
 
     createInstructor(userId: ID!): Instructor
+    updateInstructor(
+        instructorId: ID!
+        bio: String
+        lineage: String
+        photo: String
+    ): Instructor
     deleteInstructor(id: ID!): Instructor
 
 
@@ -366,6 +373,9 @@ type Tag{
 type Instructor {
   id: ID!
   user: User
+   bio: String
+  lineage: String
+  photo: String
 }
 
 type CheckIn {

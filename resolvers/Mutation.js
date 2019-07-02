@@ -126,6 +126,18 @@ const Mutation = {
             }
         })
     },
+    updateInstructor(root, args, context){
+        return context.prisma.updateInstructor({
+            data:{
+                bio: args.bio,
+                lineage: args.lineage,
+                photo: args.photo,
+            },
+            where: {
+                id: args.instructorId
+            }
+        })
+    },
     deleteInstructor(root, {id}, context){
         return context.prisma.deleteInstructor({id})
     },

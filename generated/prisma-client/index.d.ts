@@ -360,6 +360,10 @@ export interface Prisma {
     data: InstructorUpdateInput;
     where: InstructorWhereUniqueInput;
   }) => InstructorPromise;
+  updateManyInstructors: (args: {
+    data: InstructorUpdateManyMutationInput;
+    where?: InstructorWhereInput;
+  }) => BatchPayloadPromise;
   upsertInstructor: (args: {
     where: InstructorWhereUniqueInput;
     create: InstructorCreateInput;
@@ -606,7 +610,15 @@ export type EventOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type InstructorOrderByInput = "id_ASC" | "id_DESC";
+export type InstructorOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "bio_ASC"
+  | "bio_DESC"
+  | "lineage_ASC"
+  | "lineage_DESC"
+  | "photo_ASC"
+  | "photo_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -703,6 +715,48 @@ export interface InstructorWhereInput {
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
   user?: Maybe<UserWhereInput>;
+  bio?: Maybe<String>;
+  bio_not?: Maybe<String>;
+  bio_in?: Maybe<String[] | String>;
+  bio_not_in?: Maybe<String[] | String>;
+  bio_lt?: Maybe<String>;
+  bio_lte?: Maybe<String>;
+  bio_gt?: Maybe<String>;
+  bio_gte?: Maybe<String>;
+  bio_contains?: Maybe<String>;
+  bio_not_contains?: Maybe<String>;
+  bio_starts_with?: Maybe<String>;
+  bio_not_starts_with?: Maybe<String>;
+  bio_ends_with?: Maybe<String>;
+  bio_not_ends_with?: Maybe<String>;
+  lineage?: Maybe<String>;
+  lineage_not?: Maybe<String>;
+  lineage_in?: Maybe<String[] | String>;
+  lineage_not_in?: Maybe<String[] | String>;
+  lineage_lt?: Maybe<String>;
+  lineage_lte?: Maybe<String>;
+  lineage_gt?: Maybe<String>;
+  lineage_gte?: Maybe<String>;
+  lineage_contains?: Maybe<String>;
+  lineage_not_contains?: Maybe<String>;
+  lineage_starts_with?: Maybe<String>;
+  lineage_not_starts_with?: Maybe<String>;
+  lineage_ends_with?: Maybe<String>;
+  lineage_not_ends_with?: Maybe<String>;
+  photo?: Maybe<String>;
+  photo_not?: Maybe<String>;
+  photo_in?: Maybe<String[] | String>;
+  photo_not_in?: Maybe<String[] | String>;
+  photo_lt?: Maybe<String>;
+  photo_lte?: Maybe<String>;
+  photo_gt?: Maybe<String>;
+  photo_gte?: Maybe<String>;
+  photo_contains?: Maybe<String>;
+  photo_not_contains?: Maybe<String>;
+  photo_starts_with?: Maybe<String>;
+  photo_not_starts_with?: Maybe<String>;
+  photo_ends_with?: Maybe<String>;
+  photo_not_ends_with?: Maybe<String>;
   AND?: Maybe<InstructorWhereInput[] | InstructorWhereInput>;
   OR?: Maybe<InstructorWhereInput[] | InstructorWhereInput>;
   NOT?: Maybe<InstructorWhereInput[] | InstructorWhereInput>;
@@ -1452,6 +1506,9 @@ export interface InstructorCreateOneInput {
 export interface InstructorCreateInput {
   id?: Maybe<ID_Input>;
   user?: Maybe<UserCreateOneInput>;
+  bio?: Maybe<String>;
+  lineage?: Maybe<String>;
+  photo?: Maybe<String>;
 }
 
 export interface UserCreateOneInput {
@@ -1773,6 +1830,9 @@ export interface InstructorUpdateOneRequiredInput {
 
 export interface InstructorUpdateDataInput {
   user?: Maybe<UserUpdateOneInput>;
+  bio?: Maybe<String>;
+  lineage?: Maybe<String>;
+  photo?: Maybe<String>;
 }
 
 export interface UserUpdateOneInput {
@@ -3221,6 +3281,15 @@ export interface EventUpdateManyMutationInput {
 
 export interface InstructorUpdateInput {
   user?: Maybe<UserUpdateOneInput>;
+  bio?: Maybe<String>;
+  lineage?: Maybe<String>;
+  photo?: Maybe<String>;
+}
+
+export interface InstructorUpdateManyMutationInput {
+  bio?: Maybe<String>;
+  lineage?: Maybe<String>;
+  photo?: Maybe<String>;
 }
 
 export interface TagCreateInput {
@@ -3664,11 +3733,17 @@ export interface ClassSessionNullablePromise
 
 export interface Instructor {
   id: ID_Output;
+  bio?: String;
+  lineage?: String;
+  photo?: String;
 }
 
 export interface InstructorPromise extends Promise<Instructor>, Fragmentable {
   id: () => Promise<ID_Output>;
   user: <T = UserPromise>() => T;
+  bio: () => Promise<String>;
+  lineage: () => Promise<String>;
+  photo: () => Promise<String>;
 }
 
 export interface InstructorSubscription
@@ -3676,6 +3751,9 @@ export interface InstructorSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   user: <T = UserSubscription>() => T;
+  bio: () => Promise<AsyncIterator<String>>;
+  lineage: () => Promise<AsyncIterator<String>>;
+  photo: () => Promise<AsyncIterator<String>>;
 }
 
 export interface InstructorNullablePromise
@@ -3683,6 +3761,9 @@ export interface InstructorNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   user: <T = UserPromise>() => T;
+  bio: () => Promise<String>;
+  lineage: () => Promise<String>;
+  photo: () => Promise<String>;
 }
 
 export interface User {
@@ -5140,18 +5221,27 @@ export interface InstructorSubscriptionPayloadSubscription
 
 export interface InstructorPreviousValues {
   id: ID_Output;
+  bio?: String;
+  lineage?: String;
+  photo?: String;
 }
 
 export interface InstructorPreviousValuesPromise
   extends Promise<InstructorPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  bio: () => Promise<String>;
+  lineage: () => Promise<String>;
+  photo: () => Promise<String>;
 }
 
 export interface InstructorPreviousValuesSubscription
   extends Promise<AsyncIterator<InstructorPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  bio: () => Promise<AsyncIterator<String>>;
+  lineage: () => Promise<AsyncIterator<String>>;
+  photo: () => Promise<AsyncIterator<String>>;
 }
 
 export interface TagSubscriptionPayload {

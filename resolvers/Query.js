@@ -7,7 +7,9 @@ const moment = require('moment');
 const Query = {
     me: (parent, args, context) => {
         const userId = getUserId(context);
-        return context.prisma.user({ id: userId });
+        return context.prisma.user({
+            id: userId,
+        });
     },
     users(root, args, context){
         return context.prisma
@@ -54,7 +56,7 @@ const Query = {
     },
     classPeriods(root, args, context){
         return context.prisma.classPeriods({
-            orderBy: "day_ASC"
+            orderBy: "stamp_ASC"
         })
     },
     classPeriod(root,args,context) {
@@ -174,6 +176,16 @@ const Query = {
             where:{
                 title: titleSelector
             }
+        })
+    },
+    classSessionsByAcademy(root, args, context){
+        return context.prisma.classSessions({
+            where:{
+                academy: {title: args.academyTitle}
+            },
+            orderBy: "date_DESC",
+            first: args.first,
+            skip: args.skip,
         })
     },
     beltPromotions(root, args, context){

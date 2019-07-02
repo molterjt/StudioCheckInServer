@@ -104,6 +104,9 @@ type Tag{
 type Instructor {
   id: ID! @id
   user: User
+  bio: String
+  lineage: String
+  photo: String
 }
 
 type CheckIn {
