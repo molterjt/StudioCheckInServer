@@ -120,7 +120,12 @@ const Query = {
         })
     },
     techniques(root, args, context){
-        return context.prisma.techniques({})
+        return context.prisma.techniques({
+            orderBy: "title_ASC",
+            where: {
+                title_contains: args.techSearch
+            }
+        })
     },
     technique(root, args, context){
         return context.prisma.technique({id: args.techniqueId})
@@ -158,7 +163,12 @@ const Query = {
     },
 
     tags(root, args, context){
-        return context.prisma.tags({})
+        return context.prisma.tags({
+            where:{
+                name_contains: args.tagSearch,
+            },
+            orderBy: "name_ASC",
+        })
     },
     tag(root, args, context){
         return context.prisma.tag({id: args.tagId})

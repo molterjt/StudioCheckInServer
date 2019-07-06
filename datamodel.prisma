@@ -51,6 +51,7 @@ type ClassSession {
   id: ID! @id
   title: String! @unique
   date: String
+  notes: String
   instructor: Instructor!
   classPeriod: ClassPeriod! @relation(name:"SessionsOfPeriod")
   academy: Academy! @relation(name: "ClassLocation", link: INLINE, onDelete: SET_NULL)
@@ -95,7 +96,7 @@ type Technique {
 type Tag{
   id: ID! @id
   name: String!
-  technique: Technique @relation(name: "TechniqueTag", link: INLINE, onDelete: SET_NULL)
+  technique: [Technique] @relation(name: "TechniqueTag", link: INLINE, onDelete: SET_NULL)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 

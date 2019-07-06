@@ -1267,6 +1267,7 @@ type ClassSession {
   id: ID!
   title: String!
   date: String
+  notes: String
   instructor: Instructor!
   classPeriod: ClassPeriod!
   academy: Academy!
@@ -1286,6 +1287,7 @@ input ClassSessionCreateInput {
   id: ID
   title: String!
   date: String
+  notes: String
   instructor: InstructorCreateOneInput!
   classPeriod: ClassPeriodCreateOneWithoutClassSessionsInput!
   academy: AcademyCreateOneWithoutClassesInput!
@@ -1312,6 +1314,7 @@ input ClassSessionCreateWithoutAcademyInput {
   id: ID
   title: String!
   date: String
+  notes: String
   instructor: InstructorCreateOneInput!
   classPeriod: ClassPeriodCreateOneWithoutClassSessionsInput!
   techniques: TechniqueCreateManyInput
@@ -1322,6 +1325,7 @@ input ClassSessionCreateWithoutCheckInsInput {
   id: ID
   title: String!
   date: String
+  notes: String
   instructor: InstructorCreateOneInput!
   classPeriod: ClassPeriodCreateOneWithoutClassSessionsInput!
   academy: AcademyCreateOneWithoutClassesInput!
@@ -1332,6 +1336,7 @@ input ClassSessionCreateWithoutClassPeriodInput {
   id: ID
   title: String!
   date: String
+  notes: String
   instructor: InstructorCreateOneInput!
   academy: AcademyCreateOneWithoutClassesInput!
   techniques: TechniqueCreateManyInput
@@ -1350,6 +1355,8 @@ enum ClassSessionOrderByInput {
   title_DESC
   date_ASC
   date_DESC
+  notes_ASC
+  notes_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1360,6 +1367,7 @@ type ClassSessionPreviousValues {
   id: ID!
   title: String!
   date: String
+  notes: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1407,6 +1415,20 @@ input ClassSessionScalarWhereInput {
   date_not_starts_with: String
   date_ends_with: String
   date_not_ends_with: String
+  notes: String
+  notes_not: String
+  notes_in: [String!]
+  notes_not_in: [String!]
+  notes_lt: String
+  notes_lte: String
+  notes_gt: String
+  notes_gte: String
+  notes_contains: String
+  notes_not_contains: String
+  notes_starts_with: String
+  notes_not_starts_with: String
+  notes_ends_with: String
+  notes_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1449,6 +1471,7 @@ input ClassSessionSubscriptionWhereInput {
 input ClassSessionUpdateInput {
   title: String
   date: String
+  notes: String
   instructor: InstructorUpdateOneRequiredInput
   classPeriod: ClassPeriodUpdateOneRequiredWithoutClassSessionsInput
   academy: AcademyUpdateOneRequiredWithoutClassesInput
@@ -1459,11 +1482,13 @@ input ClassSessionUpdateInput {
 input ClassSessionUpdateManyDataInput {
   title: String
   date: String
+  notes: String
 }
 
 input ClassSessionUpdateManyMutationInput {
   title: String
   date: String
+  notes: String
 }
 
 input ClassSessionUpdateManyWithoutAcademyInput {
@@ -1507,6 +1532,7 @@ input ClassSessionUpdateOneWithoutCheckInsInput {
 input ClassSessionUpdateWithoutAcademyDataInput {
   title: String
   date: String
+  notes: String
   instructor: InstructorUpdateOneRequiredInput
   classPeriod: ClassPeriodUpdateOneRequiredWithoutClassSessionsInput
   techniques: TechniqueUpdateManyInput
@@ -1516,6 +1542,7 @@ input ClassSessionUpdateWithoutAcademyDataInput {
 input ClassSessionUpdateWithoutCheckInsDataInput {
   title: String
   date: String
+  notes: String
   instructor: InstructorUpdateOneRequiredInput
   classPeriod: ClassPeriodUpdateOneRequiredWithoutClassSessionsInput
   academy: AcademyUpdateOneRequiredWithoutClassesInput
@@ -1525,6 +1552,7 @@ input ClassSessionUpdateWithoutCheckInsDataInput {
 input ClassSessionUpdateWithoutClassPeriodDataInput {
   title: String
   date: String
+  notes: String
   instructor: InstructorUpdateOneRequiredInput
   academy: AcademyUpdateOneRequiredWithoutClassesInput
   techniques: TechniqueUpdateManyInput
@@ -1601,6 +1629,20 @@ input ClassSessionWhereInput {
   date_not_starts_with: String
   date_ends_with: String
   date_not_ends_with: String
+  notes: String
+  notes_not: String
+  notes_in: [String!]
+  notes_not_in: [String!]
+  notes_lt: String
+  notes_lte: String
+  notes_gt: String
+  notes_gte: String
+  notes_contains: String
+  notes_not_contains: String
+  notes_starts_with: String
+  notes_not_starts_with: String
+  notes_ends_with: String
+  notes_not_ends_with: String
   instructor: InstructorWhereInput
   classPeriod: ClassPeriodWhereInput
   academy: AcademyWhereInput

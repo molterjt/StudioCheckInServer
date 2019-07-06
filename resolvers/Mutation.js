@@ -190,9 +190,9 @@ const Mutation = {
         return context.prisma
             .createTag({
                 name: args.name,
-                technique: {
+                technique: args.techniqueId ?{
                     connect: {id: args.techniqueId}
-                }
+                } : null
             })
     },
     deleteTag(root, args, context){
@@ -301,6 +301,7 @@ const Mutation = {
         const today =  new Date().toDateString();
         return context.prisma.createClassSession({
             title: today.concat("__", args.classPeriodId) ,
+            notes: args.notes,
             academy: {
                 connect: {id: args.academyId}
             },
@@ -330,6 +331,7 @@ const Mutation = {
                     academy: {
                         connect: {id: args.academyId}
                     },
+                    notes: args.notes,
                     techniques: {
                         connect: args.techniqueIds.map((tech) => ({
                             id: tech
@@ -366,6 +368,7 @@ const Mutation = {
                   academy: {
                       connect: {id: args.academyId}
                   },
+                  notes: args.notes,
                   techniques: args.techniqueIds ? { connect: args.techniqueIds.map( (tech) => ( {id: tech} ) ) } : null,
                   instructor: {
                       connect:{id: args.instructorId}
@@ -377,6 +380,7 @@ const Mutation = {
 
               create: {
                   title: titleSelector,
+                  notes: args.notes,
                   academy: {
                       connect: {id: args.academyId}
                   },

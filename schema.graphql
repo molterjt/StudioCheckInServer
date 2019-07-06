@@ -10,13 +10,13 @@ type Query{
     instructor(instructorId: ID!): Instructor
     academies: [Academy]!
     academy(academyId: ID!): Academy
-    techniques: [Technique]!
+    techniques(techSearch: String): [Technique]!
     technique(techniqueId: ID!): Technique
     checkIns: [CheckIn]!
     checkInsByUserAndClassSession(userId: ID, classSessionTitle: String): [CheckIn]
     checkInsFiveMostRecentByUser(userId:ID!): [CheckIn]
     checkIn(checkinId: ID!): CheckIn
-    tags: [Tag!]!
+    tags(tagSearch: String): [Tag!]!
     tag(tagId: ID!): Tag
     classSessions: [ClassSession!]!
     classSession(classSessionId: ID!): ClassSession
@@ -171,6 +171,7 @@ type Mutation{
     updateOrCreateClassSession(
         date: String
         title: String
+        notes: String
         classPeriodId: ID
         instructorId: ID
         academyId: ID
@@ -181,6 +182,7 @@ type Mutation{
     createClassSession(
         date: String
         title: String!
+         notes: String
         instructorId: ID!
         classPeriodId: ID!
         academyId: ID!
@@ -192,6 +194,7 @@ type Mutation{
         classSessionId: ID!
         title: String
         date: String
+        notes: String
         classPeriodId: ID
         instructorId: ID
         academyId: ID
@@ -320,6 +323,7 @@ type ClassSession {
   id: ID!
   title: String!
   date: String
+  notes: String
   instructor: Instructor!
   classPeriod: ClassPeriod!
   academy: Academy!
