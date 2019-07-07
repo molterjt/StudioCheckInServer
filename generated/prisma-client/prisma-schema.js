@@ -2343,7 +2343,7 @@ type Subscription {
 type Tag {
   id: ID!
   name: String!
-  technique: Technique
+  technique(where: TechniqueWhereInput, orderBy: TechniqueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Technique!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -2357,7 +2357,7 @@ type TagConnection {
 input TagCreateInput {
   id: ID
   name: String!
-  technique: TechniqueCreateOneWithoutTagsInput
+  technique: TechniqueCreateManyWithoutTagsInput
 }
 
 input TagCreateManyWithoutTechniqueInput {
@@ -2463,7 +2463,7 @@ input TagSubscriptionWhereInput {
 
 input TagUpdateInput {
   name: String
-  technique: TechniqueUpdateOneWithoutTagsInput
+  technique: TechniqueUpdateManyWithoutTagsInput
 }
 
 input TagUpdateManyDataInput {
@@ -2535,7 +2535,9 @@ input TagWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  technique: TechniqueWhereInput
+  technique_every: TechniqueWhereInput
+  technique_some: TechniqueWhereInput
+  technique_none: TechniqueWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -2586,9 +2588,9 @@ input TechniqueCreateManyInput {
   connect: [TechniqueWhereUniqueInput!]
 }
 
-input TechniqueCreateOneWithoutTagsInput {
-  create: TechniqueCreateWithoutTagsInput
-  connect: TechniqueWhereUniqueInput
+input TechniqueCreateManyWithoutTagsInput {
+  create: [TechniqueCreateWithoutTagsInput!]
+  connect: [TechniqueWhereUniqueInput!]
 }
 
 input TechniqueCreateWithoutTagsInput {
@@ -2717,18 +2719,21 @@ input TechniqueUpdateManyMutationInput {
   title: String
 }
 
+input TechniqueUpdateManyWithoutTagsInput {
+  create: [TechniqueCreateWithoutTagsInput!]
+  delete: [TechniqueWhereUniqueInput!]
+  connect: [TechniqueWhereUniqueInput!]
+  set: [TechniqueWhereUniqueInput!]
+  disconnect: [TechniqueWhereUniqueInput!]
+  update: [TechniqueUpdateWithWhereUniqueWithoutTagsInput!]
+  upsert: [TechniqueUpsertWithWhereUniqueWithoutTagsInput!]
+  deleteMany: [TechniqueScalarWhereInput!]
+  updateMany: [TechniqueUpdateManyWithWhereNestedInput!]
+}
+
 input TechniqueUpdateManyWithWhereNestedInput {
   where: TechniqueScalarWhereInput!
   data: TechniqueUpdateManyDataInput!
-}
-
-input TechniqueUpdateOneWithoutTagsInput {
-  create: TechniqueCreateWithoutTagsInput
-  update: TechniqueUpdateWithoutTagsDataInput
-  upsert: TechniqueUpsertWithoutTagsInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: TechniqueWhereUniqueInput
 }
 
 input TechniqueUpdateWithoutTagsDataInput {
@@ -2740,15 +2745,21 @@ input TechniqueUpdateWithWhereUniqueNestedInput {
   data: TechniqueUpdateDataInput!
 }
 
-input TechniqueUpsertWithoutTagsInput {
-  update: TechniqueUpdateWithoutTagsDataInput!
-  create: TechniqueCreateWithoutTagsInput!
+input TechniqueUpdateWithWhereUniqueWithoutTagsInput {
+  where: TechniqueWhereUniqueInput!
+  data: TechniqueUpdateWithoutTagsDataInput!
 }
 
 input TechniqueUpsertWithWhereUniqueNestedInput {
   where: TechniqueWhereUniqueInput!
   update: TechniqueUpdateDataInput!
   create: TechniqueCreateInput!
+}
+
+input TechniqueUpsertWithWhereUniqueWithoutTagsInput {
+  where: TechniqueWhereUniqueInput!
+  update: TechniqueUpdateWithoutTagsDataInput!
+  create: TechniqueCreateWithoutTagsInput!
 }
 
 input TechniqueWhereInput {

@@ -1426,7 +1426,9 @@ export interface TagWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  technique?: Maybe<TechniqueWhereInput>;
+  technique_every?: Maybe<TechniqueWhereInput>;
+  technique_some?: Maybe<TechniqueWhereInput>;
+  technique_none?: Maybe<TechniqueWhereInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -3335,12 +3337,14 @@ export interface InstructorUpdateManyMutationInput {
 export interface TagCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  technique?: Maybe<TechniqueCreateOneWithoutTagsInput>;
+  technique?: Maybe<TechniqueCreateManyWithoutTagsInput>;
 }
 
-export interface TechniqueCreateOneWithoutTagsInput {
-  create?: Maybe<TechniqueCreateWithoutTagsInput>;
-  connect?: Maybe<TechniqueWhereUniqueInput>;
+export interface TechniqueCreateManyWithoutTagsInput {
+  create?: Maybe<
+    TechniqueCreateWithoutTagsInput[] | TechniqueCreateWithoutTagsInput
+  >;
+  connect?: Maybe<TechniqueWhereUniqueInput[] | TechniqueWhereUniqueInput>;
 }
 
 export interface TechniqueCreateWithoutTagsInput {
@@ -3350,23 +3354,43 @@ export interface TechniqueCreateWithoutTagsInput {
 
 export interface TagUpdateInput {
   name?: Maybe<String>;
-  technique?: Maybe<TechniqueUpdateOneWithoutTagsInput>;
+  technique?: Maybe<TechniqueUpdateManyWithoutTagsInput>;
 }
 
-export interface TechniqueUpdateOneWithoutTagsInput {
-  create?: Maybe<TechniqueCreateWithoutTagsInput>;
-  update?: Maybe<TechniqueUpdateWithoutTagsDataInput>;
-  upsert?: Maybe<TechniqueUpsertWithoutTagsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<TechniqueWhereUniqueInput>;
+export interface TechniqueUpdateManyWithoutTagsInput {
+  create?: Maybe<
+    TechniqueCreateWithoutTagsInput[] | TechniqueCreateWithoutTagsInput
+  >;
+  delete?: Maybe<TechniqueWhereUniqueInput[] | TechniqueWhereUniqueInput>;
+  connect?: Maybe<TechniqueWhereUniqueInput[] | TechniqueWhereUniqueInput>;
+  set?: Maybe<TechniqueWhereUniqueInput[] | TechniqueWhereUniqueInput>;
+  disconnect?: Maybe<TechniqueWhereUniqueInput[] | TechniqueWhereUniqueInput>;
+  update?: Maybe<
+    | TechniqueUpdateWithWhereUniqueWithoutTagsInput[]
+    | TechniqueUpdateWithWhereUniqueWithoutTagsInput
+  >;
+  upsert?: Maybe<
+    | TechniqueUpsertWithWhereUniqueWithoutTagsInput[]
+    | TechniqueUpsertWithWhereUniqueWithoutTagsInput
+  >;
+  deleteMany?: Maybe<TechniqueScalarWhereInput[] | TechniqueScalarWhereInput>;
+  updateMany?: Maybe<
+    | TechniqueUpdateManyWithWhereNestedInput[]
+    | TechniqueUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TechniqueUpdateWithWhereUniqueWithoutTagsInput {
+  where: TechniqueWhereUniqueInput;
+  data: TechniqueUpdateWithoutTagsDataInput;
 }
 
 export interface TechniqueUpdateWithoutTagsDataInput {
   title?: Maybe<String>;
 }
 
-export interface TechniqueUpsertWithoutTagsInput {
+export interface TechniqueUpsertWithWhereUniqueWithoutTagsInput {
+  where: TechniqueWhereUniqueInput;
   update: TechniqueUpdateWithoutTagsDataInput;
   create: TechniqueCreateWithoutTagsInput;
 }
@@ -4284,7 +4308,15 @@ export interface Tag {
 export interface TagPromise extends Promise<Tag>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  technique: <T = TechniquePromise>() => T;
+  technique: <T = FragmentableArray<Technique>>(args?: {
+    where?: TechniqueWhereInput;
+    orderBy?: TechniqueOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -4294,7 +4326,15 @@ export interface TagSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-  technique: <T = TechniqueSubscription>() => T;
+  technique: <T = Promise<AsyncIterator<TechniqueSubscription>>>(args?: {
+    where?: TechniqueWhereInput;
+    orderBy?: TechniqueOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -4302,7 +4342,15 @@ export interface TagSubscription
 export interface TagNullablePromise extends Promise<Tag | null>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  technique: <T = TechniquePromise>() => T;
+  technique: <T = FragmentableArray<Technique>>(args?: {
+    where?: TechniqueWhereInput;
+    orderBy?: TechniqueOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }

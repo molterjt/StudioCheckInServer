@@ -204,6 +204,8 @@ type Mutation{
 
     deleteClassSession(classSessionId: ID!): ClassSession
 
+    deleteClassSessionTechnqiue(classSessionId: ID!, techniqueIds: [ID]): ClassSession
+
 
     createClassPeriod(
         day: String!

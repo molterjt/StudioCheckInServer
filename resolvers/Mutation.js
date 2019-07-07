@@ -323,35 +323,50 @@ const Mutation = {
         return context.prisma.deleteClassSession({id: args.classSessionId})
 
     },
+    deleteClassSessionTechnqiue(root, args, context){
+        return context.prisma.updateClassSession({
+            where: {
+                id: args.classSessionId,
+            },
+            data: {
+                techniques: {
+                    disconnect: args.techniqueIds.map((tech) => ({
+                        id: tech
+                    }))
+                }
+            }
+        })
+    },
+
     updateClassSession(root, args, context){
         return context.prisma
             .updateClassSession({
                 where: {id: args.classSessionId},
                 data: {
-                    academy: {
+                    academy: args.academyId ?{
                         connect: {id: args.academyId}
-                    },
+                    } : null,
                     notes: args.notes,
-                    techniques: {
+                    techniques: args.techniqueIds ?{
                         connect: args.techniqueIds.map((tech) => ({
                             id: tech
                         }))
-                    },
-                    classPeriod: {
+                    } : null,
+                    classPeriod: args.classPeriodId ?{
                         connect: {id: args.classPeriodId}
-                    },
-                    instructor: {
+                    } : null,
+                    instructor: args.instructorId ? {
                         connect:{id: args.instructorId}
-                    },
+                    } : null,
                     date: args.date,
-                    checkIns: {
+                    checkIns: args.checkInValues ?{
                         create: args.checkInValues.map((obj) => ({
                             user: {
                                 connect:{id: obj.userId}
                             },
                             checked: obj.checked
                         }))
-                    }
+                    } : null
                 }
             })
     },

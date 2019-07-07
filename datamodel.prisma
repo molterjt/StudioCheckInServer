@@ -96,7 +96,7 @@ type Technique {
 type Tag{
   id: ID! @id
   name: String!
-  technique: [Technique] @relation(name: "TechniqueTag", link: INLINE, onDelete: SET_NULL)
+  technique: [Technique] @relation(name: "TechniqueTag", link: TABLE, onDelete: SET_NULL)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 
